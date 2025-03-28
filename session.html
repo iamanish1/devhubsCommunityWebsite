@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevHubs.in - Free Learning Sessions</title>
+    <meta name="description" content="Access free developer sessions on web development, DSA, Flutter, and more at DevHubs.in">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --dark: #0f172a;
+            --dark-gray: #1e293b;
+            --medium-gray: #334155;
+            --light-gray: #e2e8f0;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 5%;
+            background-color: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .navbar.scrolled {
+            padding: 1rem 5%;
+        }
+        
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 32px;
+        }
+        
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .navbar ul li {
+            position: relative;
+        }
+        
+        .navbar ul li a {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+        }
+        
+        .navbar ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .navbar ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .navbar ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .sessions-hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 60vh;
+            padding: 6rem 5% 4rem;
+            background: linear-gradient(135deg, var(--dark), var(--dark-gray));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sessions-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+            animation: pulse 15s infinite alternate;
+            z-index: 0;
+        }
+        
+        .sessions-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        .sessions-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .sessions-hero p {
+            font-size: 1.1rem;
+            color: var(--light-gray);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            background-color: var(--primary);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+            border: 2px solid var(--primary);
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
+        
+        /* Search and Filter Section */
+        .session-controls {
+            padding: 2rem 5%;
+            background-color: var(--dark-gray);
+            position: sticky;
+            top: 80px;
+            z-index: 900;
+        }
+        
+        .search-filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: space-between;
+        }
+        
+        .search-bar {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--medium-gray);
+            background-color: var(--dark);
+            color: var(--white);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-gray);
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .filter-label {
+            color: var(--light-gray);
+            font-weight: 500;
+        }
+        
+        .filter-select {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--medium-gray);
+            background-color: var(--dark);
+            color: var(--white);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        
+        /* Sessions Grid */
+        .sessions-container {
+            padding: 3rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .session-card {
+            background-color: var(--dark-gray);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .session-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .session-content {
+            padding: 1.5rem;
+        }
+        
+        .session-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--white);
+        }
+        
+        .session-description {
+            color: var(--light-gray);
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+        }
+        
+        .session-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--light-gray);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .session-instructor {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .instructor-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .instructor-info h4 {
+            font-size: 0.9rem;
+            color: var(--white);
+        }
+        
+        .instructor-info p {
+            font-size: 0.8rem;
+            color: var(--light-gray);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark-gray);
+            padding: 3rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.25rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .contact-info {
+            list-style: none;
+        }
+        
+        .contact-info li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+        
+        .contact-info i {
+            color: var(--primary);
+            margin-top: 0.2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--dark);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.1;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .sessions-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .search-filter-container {
+                flex-direction: column;
+            }
+            
+            .search-bar {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar ul {
+                position: fixed;
+                top: 76px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 76px);
+                background-color: var(--dark-gray);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 3rem;
+                transition: var(--transition);
+                gap: 2rem;
+            }
+            
+            .navbar ul.active {
+                left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .sessions-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .sessions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+            
+            .sessions-hero {
+                min-height: 50vh;
+                padding: 6rem 5% 2rem;
+            }
+            
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="logo">
+            DevHubs
+        </a>
+        <ul id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="/session.html" class="active">Free Sessions</a></li>
+            <li><a href="/Documentation.html">Documentation</a></li>
+            <li><a href="/BuildWithUs.html">Build With Us</a></li>
+            <li><a href="/community.html">Community</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="sessions-hero">
+        <div class="sessions-hero-content">
+            <h1>Enhance Your Skills with Free Expert-Led Sessions</h1>
+            <p>Access our library of free recorded sessions on web development, DSA, Flutter, and more. Learn at your own pace from industry professionals.</p>
+            <a href="#sessions" class="btn">Start Learning Now</a>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="session-controls">
+        <div class="search-filter-container">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="sessionSearch" placeholder="Search free sessions...">
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Filter by:</span>
+                <select class="filter-select" id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="web">Web Development</option>
+                    <option value="dsa">DSA & Algorithms</option>
+                    <option value="flutter">Flutter & Mobile</option>
+                    <option value="programming">Programming Basics</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sessions Grid -->
+    <section class="sessions-container" id="sessions">
+        <h2 class="section-title">Free Learning Sessions</h2>
+        <div class="sessions-grid" id="sessionsGrid">
+            <!-- Web Development Session -->
+            <div class="session-card" data-category="web">
+                <div class="video-container">
+                    <iframe 
+                    width="560" height="315"
+                    src="https://www.youtube.com/embed/yGB9jhsEsr8"
+                    title="Web Development Session"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+                </div>
+                <div class="session-content">
+                    <h3 class="session-title">Modern Web Development with React</h3>
+                    <p class="session-description">Learn how to build responsive web applications using React hooks, context API, and modern CSS techniques.</p>
+                    <div class="session-instructor">
+                        <div class="instructor-info">
+                            <h4>Rahul Sharma</h4>
+                            <p>Senior Frontend Developer</p>
+                        </div>
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="far fa-clock"></i> 2h 15m</span>
+                        <span><i class="far fa-calendar"></i> May 15, 2023</span>
+                    </div>
+                    <a href="https://youtu.be/yGB9jhsEsr8?si=2pTaBJg1IB2eVQcf" target="_blank" class="btn">Watch Now</a>
+                </div>
+            </div>
+            
+            <!-- DSA Session -->
+            <div class="session-card" data-category="dsa">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="DSA Session" allowfullscreen></iframe>
+                </div>
+                <div class="session-content">
+                    <h3 class="session-title">Mastering Binary Trees</h3>
+                    <p class="session-description">Deep dive into binary tree traversal techniques and common interview problems with optimized solutions.</p>
+                    <div class="session-instructor">
+                        <div class="instructor-info">
+                            <h4>Priya Patel</h4>
+                            <p>DSA Expert</p>
+                        </div>
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="far fa-clock"></i> 1h 45m</span>
+                        <span><i class="far fa-calendar"></i> May 22, 2023</span>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Watch Now</a>
+                </div>
+            </div>
+            
+            <!-- Flutter Session -->
+            <div class="session-card" data-category="flutter">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Flutter Session" allowfullscreen></iframe>
+                </div>
+                <div class="session-content">
+                    <h3 class="session-title">Flutter State Management</h3>
+                    <p class="session-description">Comprehensive guide to state management in Flutter using Provider and Riverpod.</p>
+                    <div class="session-instructor">
+                        <div class="instructor-info">
+                            <h4>Arjun Mehta</h4>
+                            <p>Flutter Developer</p>
+                        </div>
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="far fa-clock"></i> 2h 30m</span>
+                        <span><i class="far fa-calendar"></i> June 5, 2023</span>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Watch Now</a>
+                </div>
+            </div>
+            
+            <!-- Programming Basics Session -->
+            <div class="session-card" data-category="programming">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Programming Basics Session" allowfullscreen></iframe>
+                </div>
+                <div class="session-content">
+                    <h3 class="session-title">Python for Beginners</h3>
+                    <p class="session-description">Learn Python fundamentals from scratch with hands-on exercises and projects.</p>
+                    <div class="session-instructor">
+                        <div class="instructor-info">
+                            <h4>Neha Gupta</h4>
+                            <p>Python Instructor</p>
+                        </div>
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="far fa-clock"></i> 3h 10m</span>
+                        <span><i class="far fa-calendar"></i> June 12, 2023</span>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Watch Now</a>
+                </div>
+            </div>
+            
+            <!-- Additional Free Session 1 -->
+            <div class="session-card" data-category="web">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="HTML & CSS Fundamentals" allowfullscreen></iframe>
+                </div>
+                <div class="session-content">
+                    <h3 class="session-title">HTML & CSS Fundamentals</h3>
+                    <p class="session-description">Learn the building blocks of web development with hands-on examples and best practices.</p>
+                    <div class="session-instructor">
+                        <div class="instructor-info">
+                            <h4>Sanjay Verma</h4>
+                            <p>Web Development Instructor</p>
+                        </div>
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="far fa-clock"></i> 1h 50m</span>
+                        <span><i class="far fa-calendar"></i> June 19, 2023</span>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Watch Now</a>
+                </div>
+            </div>
+            
+            <!-- Additional Free Session 2 -->
+            <div class="session-card" data-category="dsa">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Graph Algorithms" allowfullscreen></iframe>
+                </div>
+                <div class="session-content">
+                    <h3 class="session-title">Graph Algorithms Explained</h3>
+                    <p class="session-description">Understand graph traversal algorithms like BFS and DFS with practical implementations.</p>
+                    <div class="session-instructor">
+                        <div class="instructor-info">
+                            <h4>Anjali Kapoor</h4>
+                            <p>Algorithm Specialist</p>
+                        </div>
+                    </div>
+                    <div class="session-meta">
+                        <span><i class="far fa-clock"></i> 2h 10m</span>
+                        <span><i class="far fa-calendar"></i> June 26, 2023</span>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Watch Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>DevHubs.in</h3>
+            <p>Bridging the gap between education and industry through practical learning experiences and mentorship.</p>
+            <div class="social-links">
+                <a href="#" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="social-link" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                <a href="#" class="social-link" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sessions.html">Free Sessions</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Documentation</a></li>
+                <li><a href="#">Community</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Resources</h3>
+            <ul class="footer-links">
+                <li><a href="#">Community Guidelines</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul class="contact-info">
+                <li>
+                    <i class="fas fa-envelope"></i>
+                    <span>contact@devhubs.in</span>
+                </li>
+                <li>
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+91 98765 43210</span>
+                </li>
+                <li>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Bangalore, India</span>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    
+    <div class="copyright">
+        &copy; 2023 DevHubs.in. All rights reserved.
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Session filtering functionality
+        const sessionSearch = document.getElementById('sessionSearch');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const sessionsGrid = document.getElementById('sessionsGrid');
+        const sessionCards = sessionsGrid.querySelectorAll('.session-card');
+        
+        function filterSessions() {
+            const searchTerm = sessionSearch.value.toLowerCase();
+            const categoryValue = categoryFilter.value;
+            
+            sessionCards.forEach(card => {
+                const title = card.querySelector('.session-title').textContent.toLowerCase();
+                const description = card.querySelector('.session-description').textContent.toLowerCase();
+                const category = card.dataset.category;
+                
+                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+                const matchesCategory = categoryValue === 'all' || category === categoryValue;
+                
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Add event listeners for filtering
+        sessionSearch.addEventListener('input', filterSessions);
+        categoryFilter.addEventListener('change', filterSessions);
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

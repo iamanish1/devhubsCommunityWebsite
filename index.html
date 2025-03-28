@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevHubs.in - Bridging the Gap Between Students and Industry</title>
+    <meta name="description" content="Join DevHubs.in community for free skill-building sessions, premium mentorship, and career growth opportunities in tech.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --dark: #0f172a;
+            --dark-gray: #1e293b;
+            --medium-gray: #334155;
+            --light-gray: #e2e8f0;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 5%;
+            background-color: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .navbar.scrolled {
+            padding: 1rem 5%;
+        }
+        
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 32px;
+        }
+        
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .navbar ul li {
+            position: relative;
+        }
+        
+        .navbar ul li a {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+        }
+        
+        .navbar ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .navbar ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .navbar ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            padding: 6rem 5% 4rem;
+            background: linear-gradient(135deg, var(--dark), var(--dark-gray));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+            animation: pulse 15s infinite alternate;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--light-gray);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            background-color: var(--primary);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+            border: 2px solid var(--primary);
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            margin-left: 1rem;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 5rem 5%;
+            background-color: var(--dark);
+            text-align: center;
+        }
+        
+        .section-title {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            color: var(--white);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about p {
+            font-size: 1.1rem;
+            color: var(--light-gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Sessions Section */
+        .sessions {
+            padding: 5rem 5%;
+            background-color: var(--dark-gray);
+        }
+        
+        .session-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .session-card {
+            background-color: var(--dark);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .session-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .session-header {
+            padding: 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--white);
+        }
+        
+        .session-header h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .session-body {
+            padding: 1.5rem;
+        }
+        
+        .session-body p {
+            color: var(--light-gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .session-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .premium-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: #f59e0b;
+            color: var(--dark);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        /* Build With Us Section */
+        .build-with-us {
+            padding: 5rem 5%;
+            background-color: var(--dark);
+            text-align: center;
+        }
+        
+        .build-form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            background-color: var(--dark-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light-gray);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--medium-gray);
+            background-color: var(--dark);
+            color: var(--white);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        
+        /* Events Section */
+        .events {
+            padding: 5rem 5%;
+            background-color: var(--dark-gray);
+        }
+        
+        .event-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .event-card {
+            background-color: var(--dark);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .event-image {
+            height: 180px;
+            background-color: var(--medium-gray);
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .event-body {
+            padding: 1.5rem;
+        }
+        
+        .event-date {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .event-body h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .event-body p {
+            color: var(--light-gray);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 5%;
+            background-color: var(--dark);
+        }
+        
+        .testimonial-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: var(--dark-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            font-size: 5rem;
+            color: rgba(37, 99, 235, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: var(--light-gray);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        
+        .author-info h4 {
+            color: var(--white);
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info p {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Community CTA */
+        .community-cta {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            text-align: center;
+            color: var(--white);
+        }
+        
+        .community-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .community-cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            font-size: 1.25rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark-gray);
+            padding: 3rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.25rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .contact-info {
+            list-style: none;
+        }
+        
+        .contact-info li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+        
+        .contact-info i {
+            color: var(--primary);
+            margin-top: 0.2rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--dark);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.1;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar ul {
+                position: fixed;
+                top: 76px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 76px);
+                background-color: var(--dark-gray);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 3rem;
+                transition: var(--transition);
+                gap: 2rem;
+            }
+            
+            .navbar ul.active {
+                left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+        /* Build With Us Section */
+.build-with-us {
+    padding: 5rem 5%;
+    background-color: var(--dark-gray);
+    text-align: center;
+    position: relative;
+}
+
+.build-with-us::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.build-form {
+    background: var(--dark);
+    border-radius: 12px;
+    padding: 2.5rem;
+    max-width: 500px;
+    margin: 2rem auto 0;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border: 1px solid var(--medium-gray);
+}
+
+.premium-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    padding: 0.5rem 1.5rem;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    z-index: 2;
+}
+
+.build-form h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--white);
+    background: none;
+    -webkit-text-fill-color: unset;
+}
+
+.form-description {
+    color: var(--light-gray);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+}
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">
+            DevHubs
+        </a>
+        <ul id="navMenu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="/session.html">Sessions</a></li>
+            <li><a href="/BuildWithUs.html">Build With Us</a></li>
+            <li><a href="/community.html">Join Community</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Bridging the Gap Between Students and Industry</h1>
+            <p>Join DevHubs.in community for free skill-building sessions, premium mentorship, and career growth opportunities in tech.</p>
+            <div class="btn-group">
+                <a href="https://chat.whatsapp.com/L0IY4po5Abd4wDnfjllzC3" class="btn">Join Community</a>
+                <a href="#sessions" class="btn btn-secondary">Explore Sessions</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <h2 class="section-title">About DevHubs.in</h2>
+        <div class="about-content">
+            <p>DevHubs.in is a developer-centric community focused on bridging the skill and experience gap between students and the industry. We provide hands-on learning experiences through free workshops, premium mentorship programs, and real-world project opportunities.</p>
+            <p>Our mission is to empower the next generation of developers with practical skills, industry insights, and a supportive community to accelerate their career growth.</p>
+        </div>
+    </section>
+
+    <!-- Sessions Section -->
+    <section class="sessions" id="sessions">
+        <h2 class="section-title">Our Learning Sessions</h2>
+        <div class="session-container">
+            <div class="session-card">
+                <div class="session-header">
+                    <h3>Data Structures & Algorithms</h3>
+                    <p>Master the fundamentals for coding interviews</p>
+                </div>
+                <div class="session-body">
+                    <p>Comprehensive DSA course covering arrays, linked lists, trees, graphs, and advanced algorithms with problem-solving techniques.</p>
+                    <div class="session-meta">
+                        <span><i class="far fa-clock"></i> Weekly Sessions</span>
+                        <span><i class="fas fa-user-graduate"></i> Beginner Friendly</span>
+                    </div>
+                    <a href="/session.html" class="btn">Join Session</a>
+                </div>
+            </div>
+            
+            <div class="session-card">
+                <div class="session-header">
+                    <h3>Web Development</h3>
+                    <p>Full-stack development with modern technologies</p>
+                </div>
+                <div class="session-body">
+                    <p>Learn HTML, CSS, JavaScript, React, Node.js and build complete web applications from scratch.</p>
+                    <div class="session-meta">
+                        <span><i class="far fa-clock"></i> Bi-weekly</span>
+                        <span><i class="fas fa-user-graduate"></i> All Levels</span>
+                    </div>
+                    <a href="/session.html" class="btn">Join Session</a>
+                </div>
+            </div>
+            
+            <div class="session-card">
+                <div class="session-header">
+                    <h3>Flutter Development</h3>
+                    <p>Build cross-platform mobile apps</p>
+                </div>
+                <div class="session-body">
+                    <p>Complete Flutter course covering widgets, state management, API integration and publishing to app stores.</p>
+                    <div class="session-meta">
+                        <span><i class="far fa-clock"></i> Monthly</span>
+                        <span><i class="fas fa-user-graduate"></i> Intermediate</span>
+                    </div>
+                    <a href="/session.html" class="btn">Join Session</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Build With Us Section --><section class="build-with-us" id="build">
+    <div class="container">
+        <h2 class="section-title">Build With Us</h2>
+        <p class="section-subtitle">Join our premium mentorship program to work on real-world projects with industry experts</p>
+        
+        <div class="build-form">
+            <div class="premium-badge">PREMIUM PROGRAM</div>
+            <h3>Register Your Interest</h3>
+            <p class="form-description">Fill out the form to get started on your journey with expert guidance.</p>
+            <a href="https://forms.gle/7PcNeQgMp2kxJvLT6" target="_blank" class="btn btn-primary">Apply Now</a>
+        </div>
+    </div>
+</section>
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <h2 class="section-title">Success Stories from Our Community</h2>
+        <div class="testimonial-container">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    "DevHubs was a game-changer for me! The structured DSA sessions and mock interviews helped me improve my problem-solving skills. I cleared my interview at Amazon in the second attempt!"
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h4>Rahul Sharma</h4>
+                        <p>SDE at Amazon (Ex-Tier 3 College Student)</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    "Being from a non-CS background, I struggled with real-world projects. The 'Build With Us' program gave me hands-on experience with MERN stack, and I landed a frontend developer job within a month!"
+                </div>
+                <div class="testimonial-author">
+                 
+                    <div class="author-info">
+                        <h4>Priya Patel</h4>
+                        <p>Frontend Developer at Zomato</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    "I've mentored students from multiple platforms, but DevHubs has an insane energy! Students are eager to learn, and the community truly helps each other. Proud to be a part of this!"
+                </div>
+                <div class="testimonial-author">
+                  
+                    <div class="author-info">
+                        <h4>Arjun Mehta</h4>
+                        <p>Senior Developer & Mentor at Flipkart</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>DevHubs.in</h3>
+            <p>Bridging the gap between education and industry through practical learning experiences and mentorship.</p>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/session.html">Sessions</a></li>
+                <li><a href="/BuildWithUs.html">Build With Us</a></li>
+                <li><a href="/Documentation.html">Documentation</a></li>
+            </ul>
+        </div>
+        
+        
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul class="contact-info">
+                <li>
+                    <i class="fas fa-envelope"></i>
+                    <span>devhubs526@gmail.com</span>
+                </li>
+                <li>
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+91 9354072118</span>
+                </li>
+                <li>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Delhi, India</span>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    
+    <div class="copyright">
+        &copy; 2023 DevHubs.in. All rights reserved.
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

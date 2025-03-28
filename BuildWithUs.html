@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build With Us - Premium 1:1 Coding Session | DevHubs.in</title>
+    <meta name="description" content="Break free from tutorial hell with our ₹149 premium coding session where you build real projects with expert guidance">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --dark: #0f172a;
+            --dark-gray: #1e293b;
+            --medium-gray: #334155;
+            --light-gray: #e2e8f0;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: rgba(15, 23, 42, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .navbar .logo img {
+            height: 32px;
+        }
+        
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .navbar ul li a {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .navbar ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .navbar ul li a.active {
+            color: var(--primary);
+        }
+        
+        .navbar ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .build-hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), 
+                        url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 5% 4rem;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .build-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .build-hero p {
+            font-size: 1.2rem;
+            color: var(--light-gray);
+            margin-bottom: 2rem;
+        }
+        
+        .price-tag {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: var(--warning);
+            color: var(--dark);
+            border-radius: 50px;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        /* Problem Section */
+        .problem-section {
+            padding: 5rem 5%;
+            background-color: var(--dark);
+            text-align: center;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .problem-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        
+        .problem-card {
+            background-color: var(--dark-gray);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 300px;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.1);
+        }
+        
+        .problem-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .problem-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .problem-card p {
+            color: var(--light-gray);
+            font-size: 0.95rem;
+        }
+        
+        /* Solution Section */
+        .solution-section {
+            padding: 5rem 5%;
+            background-color: var(--dark-gray);
+        }
+        
+        .solution-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .solution-feature {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .solution-feature:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .solution-image {
+            flex: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .solution-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .solution-content {
+            flex: 1;
+        }
+        
+        .solution-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .solution-content p {
+            color: var(--light-gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+        
+        .feature-list i {
+            color: var(--primary);
+            margin-top: 0.2rem;
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            padding: 5rem 5%;
+            background-color: var(--dark);
+            text-align: center;
+        }
+        
+        .pricing-card {
+            background-color: var(--dark-gray);
+            border-radius: 12px;
+            padding: 3rem;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card::before {
+            content: 'Limited Slots';
+            position: absolute;
+            top: 20px;
+            right: -50px;
+            background-color: var(--warning);
+            color: var(--dark);
+            padding: 0.5rem 2rem;
+            transform: rotate(45deg);
+            font-weight: 700;
+            font-size: 0.9rem;
+            width: 200px;
+            text-align: center;
+        }
+        
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .pricing-price span {
+            font-size: 1.5rem;
+            color: var(--light-gray);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .pricing-features i {
+            color: var(--primary);
+        }
+        
+        /* Registration Form */
+        .form-section {
+            padding: 5rem 5%;
+            background-color: var(--dark-gray);
+        }
+        
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--dark);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--medium-gray);
+            background-color: var(--dark-gray);
+            color: var(--white);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .form-submit:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            padding: 3rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .contact-info {
+            list-style: none;
+        }
+        
+        .contact-info li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+        
+        .contact-info i {
+            color: var(--primary);
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--dark-gray);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .solution-feature {
+                flex-direction: column !important;
+            }
+            
+            .solution-image {
+                margin-bottom: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar ul {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--dark-gray);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 3rem;
+                transition: var(--transition);
+                gap: 2rem;
+            }
+            
+            .navbar ul.active {
+                left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .build-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+            
+            .build-hero {
+                padding: 6rem 5% 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .pricing-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .pricing-price {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+           
+            DevHubs
+        </a>
+        <ul id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="/session.html">Sessions</a></li>
+            <li><a href="/community.html">Community</a></li>
+            <li><a href="/BuildWithUs.html" class="active">Build With Us</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="build-hero">
+        <div class="hero-content">
+            <h1>Break Free From Tutorial Hell</h1>
+            <p>Finally build real projects with 1:1 expert guidance at an affordable price</p>
+            <div class="price-tag">Only ₹149</div>
+            <div>
+                <a href="#register" class="btn">Book Your Slot Now</a>
+                <a href="#how-it-works" class="btn btn-outline">Learn How It Works</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <h2 class="section-title">Stuck in Tutorial Hell?</h2>
+        <div class="problem-container">
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <h3>Watch But Can't Build</h3>
+                <p>You follow tutorials but struggle to implement concepts in your own projects</p>
+            </div>
+            
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3>Lack of Guidance</h3>
+                <p>No one to answer your specific questions when you get stuck</p>
+            </div>
+            
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3>No Portfolio Projects</h3>
+                <p>Struggling to create projects that impress employers</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution-section" id="how-it-works">
+        <h2 class="section-title">How "Build With Us" Works</h2>
+        <div class="solution-container">
+            <div class="solution-feature">
+                <div class="solution-image">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="1:1 Coding Session">
+                </div>
+                <div class="solution-content">
+                    <h3>You Code, We Guide</h3>
+                    <p>This isn't another tutorial where you passively watch. You'll be actively coding while our experts guide you through each step.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Hands-on coding experience</li>
+                        <li><i class="fas fa-check"></i> Real-time feedback and corrections</li>
+                        <li><i class="fas fa-check"></i> Learn industry best practices</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="solution-feature">
+                <div class="solution-image">
+                    <img src="https://images.unsplash.com/photo-1605379399642-870262d3d051?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1506&q=80" alt="Real Projects">
+                </div>
+                <div class="solution-content">
+                    <h3>Build Real Projects</h3>
+                    <p>Work on practical, portfolio-worthy projects that demonstrate your skills to potential employers.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Complete projects from scratch</li>
+                        <li><i class="fas fa-check"></i> Understand real-world implementation</li>
+                        <li><i class="fas fa-check"></i> Add to your GitHub portfolio</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="solution-feature">
+                <div class="solution-image">
+                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Affordable Pricing">
+                </div>
+                <div class="solution-content">
+                    <h3>Affordable For Everyone</h3>
+                    <p>We believe quality mentorship shouldn't break the bank. That's why we're offering this premium experience at just ₹149.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Fraction of typical mentorship costs</li>
+                        <li><i class="fas fa-check"></i> No hidden fees or upsells</li>
+                        <li><i class="fas fa-check"></i> Money-back guarantee if unsatisfied</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <h2 class="section-title">Simple, Transparent Pricing</h2>
+        <div class="pricing-card">
+            <div class="pricing-price">₹149 <span>only</span></div>
+            <ul class="pricing-features">
+                <li><i class="fas fa-check-circle"></i> 1-hour 1:1 coding session</li>
+                <li><i class="fas fa-check-circle"></i> Build a complete project</li>
+                <li><i class="fas fa-check-circle"></i> Expert guidance at every step</li>
+                <li><i class="fas fa-check-circle"></i> All code files provided</li>
+                <li><i class="fas fa-check-circle"></i> Post-session support</li>
+            </ul>
+            <a href="#register" class="btn">Book Your Slot Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>DevHubs.in</h3>
+            <p>Bridging the gap between education and industry through practical learning and mentorship.</p>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sessions.html">Sessions</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="build-with-us.html">Build With Us</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Resources</h3>
+            <ul class="footer-links">
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Testimonials</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul class="contact-info">
+                <li><i class="fas fa-envelope"></i> build@devhubs.in</li>
+                <li><i class="fas fa-phone-alt"></i> +91 98765 43210</li>
+                <li><i class="fas fa-map-marker-alt"></i> Bangalore, India</li>
+            </ul>
+        </div>
+    </footer>
+    
+    <div class="copyright">
+        &copy; 2023 DevHubs.in. All rights reserved.
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Form submission
+        const form = document.getElementById('buildWithUsForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const skill = document.getElementById('skill').value;
+            const interest = document.getElementById('interest').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send this data to your backend
+            // For now, we'll just show an alert
+            alert(`Thank you ${name}! Your application has been received. Our team will contact you shortly on WhatsApp to schedule your session.`);
+            
+            // Reset form
+            form.reset();
+            
+            // Scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

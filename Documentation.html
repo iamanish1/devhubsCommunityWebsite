@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevHubs.in - Learning Resources & Documentation</title>
+    <meta name="description" content="Access all DevHubs.in learning materials, session notes, code samples and documentation in one place">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --dark: #0f172a;
+            --dark-gray: #1e293b;
+            --medium-gray: #334155;
+            --light-gray: #e2e8f0;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: rgba(15, 23, 42, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .navbar .logo img {
+            height: 32px;
+        }
+        
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .navbar ul li {
+            position: relative;
+        }
+        
+        .navbar ul li a {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .navbar ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .navbar ul li a.active {
+            color: var(--primary);
+        }
+        
+        .navbar ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .docs-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--dark), var(--dark-gray));
+            padding: 6rem 5% 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .docs-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+            animation: pulse 15s infinite alternate;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .docs-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .docs-hero p {
+            font-size: 1.2rem;
+            color: var(--light-gray);
+            margin-bottom: 2rem;
+        }
+        
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border-radius: 50px;
+            border: 1px solid var(--medium-gray);
+            background-color: var(--dark);
+            color: var(--white);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-gray);
+        }
+        
+        /* Documentation Categories */
+        .docs-categories {
+            padding: 5rem 5%;
+            background-color: var(--dark);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .category-card {
+            background-color: var(--dark-gray);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.1);
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .category-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .category-card p {
+            color: var(--light-gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary);
+        }
+        
+        /* Resources Section */
+        .resources-section {
+            padding: 5rem 5%;
+            background-color: var(--dark-gray);
+        }
+        
+        .resources-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .resource-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+        
+        .resource-tab {
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            background-color: var(--dark);
+            color: var(--light-gray);
+            border: 1px solid var(--medium-gray);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        
+        .resource-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .resource-tab.active {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .resource-card {
+            background-color: var(--dark);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid var(--medium-gray);
+        }
+        
+        .resource-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .resource-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .resource-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .resource-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .resource-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--light-gray);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .resource-description {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .resource-link i {
+            transition: var(--transition);
+        }
+        
+        .resource-link:hover i {
+            transform: translateX(3px);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            padding: 3rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .contact-info {
+            list-style: none;
+        }
+        
+        .contact-info li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+        
+        .contact-info i {
+            color: var(--primary);
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--dark-gray);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.1;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .docs-hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar ul {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--dark-gray);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 3rem;
+                transition: var(--transition);
+                gap: 2rem;
+            }
+            
+            .navbar ul.active {
+                left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .resource-tabs {
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+            
+            .docs-hero {
+                padding: 6rem 5% 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            DevHubs
+        </a>
+        <ul id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="sessions.html">Sessions</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li><a href="documentation.html" class="active">Documentation</a></li>
+            <li><a href="/BuildWithUs.html">Build With Us</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="docs-hero">
+        <div class="hero-content">
+            <h1>DevHubs Learning Resources</h1>
+            <p>Access all our session materials, code samples, and documentation in one place</p>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search documentation...">
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Categories -->
+    <section class="docs-categories">
+        <h2 class="section-title">Browse by Category</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3>Web Development</h3>
+                <p>HTML, CSS, JavaScript, React, Node.js and full-stack development resources</p>
+                <a href="#web-dev" class="btn">View Resources</a>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Mobile Development</h3>
+                <p>Flutter, React Native, and native mobile app development materials</p>
+                <a href="#mobile-dev" class="btn">View Resources</a>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3>Data Structures & Algorithms</h3>
+                <p>DSA concepts, problem patterns, and interview preparation guides</p>
+                <a href="#dsa" class="btn">View Resources</a>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>Backend & Databases</h3>
+                <p>Node.js, Express, MongoDB, SQL, and API development resources</p>
+                <a href="#backend" class="btn">View Resources</a>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Programming Basics</h3>
+                <p>Python, Java, C++ and fundamental programming concepts</p>
+                <a href="#programming" class="btn">View Resources</a>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h3>Tools & DevOps</h3>
+                <p>Git, Docker, CI/CD, and other development tools</p>
+                <a href="#tools" class="btn">View Resources</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="resources-section" id="web-dev">
+        <div class="resources-container">
+            <h2 class="section-title">Web Development Resources</h2>
+            <div class="resource-tabs">
+                <div class="resource-tab active">All</div>
+                <div class="resource-tab">HTML/CSS</div>
+                <div class="resource-tab">JavaScript</div>
+                <div class="resource-tab">React</div>
+                <div class="resource-tab">Node.js</div>
+                <div class="resource-tab">Full Stack</div>
+            </div>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">
+                            <i class="fab fa-html5"></i>
+                        </div>
+                        <div>
+                            <h3 class="resource-title">Modern HTML5 & CSS3</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> PDF</span>
+                                <span><i class="far fa-clock"></i> 45 pages</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="resource-description">Complete guide to modern HTML5 semantics and CSS3 features including Flexbox and Grid.</p>
+                    <a href="#" class="resource-link">Download Notes <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">
+                            <i class="fab fa-js"></i>
+                        </div>
+                        <div>
+                            <h3 class="resource-title">JavaScript ES6+ Cheat Sheet</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> PDF</span>
+                                <span><i class="far fa-clock"></i> 12 pages</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="resource-description">Quick reference for all modern JavaScript features with examples.</p>
+                    <a href="#" class="resource-link">Download Cheat Sheet <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">
+                            <i class="fab fa-react"></i>
+                        </div>
+                        <div>
+                            <h3 class="resource-title">React Hooks Guide</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> PDF</span>
+                                <span><i class="far fa-clock"></i> 32 pages</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="resource-description">Deep dive into React Hooks with practical examples and best practices.</p>
+                    <a href="#" class="resource-link">Download Guide <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">
+                            <i class="fab fa-node-js"></i>
+                        </div>
+                        <div>
+                            <h3 class="resource-title">Node.js REST API Project</h3>
+                            <div class="resource-meta">
+                                <span><i class="fab fa-github"></i> GitHub</span>
+                                <span><i class="far fa-clock"></i> Complete Project</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="resource-description">Complete codebase for building REST APIs with Node.js and Express.</p>
+                    <a href="#" class="resource-link">View Repository <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div>
+                            <h3 class="resource-title">Full Stack Authentication</h3>
+                            <div class="resource-meta">
+                                <span><i class="fas fa-video"></i> Video</span>
+                                <span><i class="far fa-clock"></i> 1h 25m</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="resource-description">Session recording: Implementing JWT auth in MERN stack applications.</p>
+                    <a href="#" class="resource-link">Watch Video <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div>
+                            <h3 class="resource-title">Web Dev Interview Prep</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> PDF</span>
+                                <span><i class="far fa-clock"></i> 28 pages</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="resource-description">Common interview questions and answers for frontend positions.</p>
+                    <a href="#" class="resource-link">Download PDF <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Can't Find What You're Looking For?</h2>
+        <p>Request specific resources or ask our community for help in finding the right materials</p>
+        <a href="community.html" class="btn">Ask the Community</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>DevHubs.in</h3>
+            <p>Bridging the gap between education and industry through practical learning and mentorship.</p>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sessions.html">Sessions</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="documentation.html">Documentation</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Resources</h3>
+            <ul class="footer-links">
+                <li><a href="#web-dev">Web Development</a></li>
+                <li><a href="#mobile-dev">Mobile Development</a></li>
+                <li><a href="#dsa">DSA & Algorithms</a></li>
+                <li><a href="#backend">Backend & Databases</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul class="contact-info">
+                <li><i class="fas fa-envelope"></i> docs@devhubs.in</li>
+                <li><i class="fas fa-phone-alt"></i> +91 98765 43210</li>
+                <li><i class="fas fa-map-marker-alt"></i> Bangalore, India</li>
+            </ul>
+        </div>
+    </footer>
+    
+    <div class="copyright">
+        &copy; 2023 DevHubs.in. All rights reserved.
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Resource tabs functionality
+        const tabs = document.querySelectorAll('.resource-tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // Here you would typically filter resources
+                // For this example, we're just toggling the active class
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
