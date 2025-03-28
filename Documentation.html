@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevHubs.in - Documentation</title>
+    <title>DevHubs.in - Documentation Hub</title>
     <meta name="description" content="Access all DevHubs.in learning materials and documentation">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #2563eb;
+            --primary-light: #3b82f6;
             --dark: #0f172a;
             --dark-gray: #1e293b;
+            --medium-gray: #334155;
             --light-gray: #e2e8f0;
             --white: #ffffff;
             --transition: all 0.3s ease;
@@ -41,6 +43,7 @@
             top: 0;
             left: 0;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
         .navbar .logo {
@@ -48,6 +51,9 @@
             font-weight: 700;
             color: var(--white);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .mobile-menu-btn {
@@ -61,23 +67,53 @@
         
         /* Hero Section */
         .docs-hero {
-            min-height: 50vh;
+            min-height: 60vh;
             display: flex;
             align-items: center;
-            background: var(--dark-gray);
-            padding: 6rem 5% 2rem;
+            background: linear-gradient(135deg, var(--dark-gray), var(--dark));
+            padding: 7rem 5% 3rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .docs-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+            animation: pulse 15s infinite alternate;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .docs-hero h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 1rem;
-            color: var(--white);
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .docs-hero p {
+            font-size: 1.2rem;
+            color: var(--light-gray);
+            margin-bottom: 2rem;
         }
         
         .search-bar {
             max-width: 600px;
-            margin: 2rem auto 0;
+            margin: 0 auto;
             position: relative;
         }
         
@@ -85,10 +121,17 @@
             width: 100%;
             padding: 0.8rem 1rem 0.8rem 3rem;
             border-radius: 50px;
-            border: 1px solid var(--light-gray);
+            border: 1px solid var(--medium-gray);
             background-color: var(--dark);
             color: var(--white);
             font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
         }
         
         .search-bar i {
@@ -101,19 +144,31 @@
         
         /* Documentation Categories */
         .docs-categories {
-            padding: 3rem 5%;
+            padding: 4rem 5%;
             background-color: var(--dark);
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
         }
         
         .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
             max-width: 1200px;
             margin: 0 auto;
@@ -121,87 +176,137 @@
         
         .category-card {
             background-color: var(--dark-gray);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 1.5rem;
             transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
             cursor: pointer;
         }
         
         .category-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
         }
         
         .category-icon {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--primary);
             margin-bottom: 1rem;
         }
         
         .category-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
         }
         
         .category-card p {
             color: var(--light-gray);
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
         }
         
         .btn {
             display: inline-block;
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             background-color: var(--primary);
             color: var(--white);
-            border-radius: 5px;
+            border-radius: 6px;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary);
         }
         
         /* Resources Section */
         .resources-section {
-            padding: 3rem 5%;
+            padding: 4rem 5%;
             background-color: var(--dark-gray);
+        }
+        
+        .resources-container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .resource-tabs {
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
             overflow-x: auto;
+            padding-bottom: 0.5rem;
         }
         
         .resource-tab {
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 50px;
             background-color: var(--dark);
             color: var(--light-gray);
-            border: none;
+            border: 1px solid var(--medium-gray);
             cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
             font-size: 0.9rem;
+        }
+        
+        .resource-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
         }
         
         .resource-tab.active {
             background-color: var(--primary);
             color: var(--white);
+            border-color: var(--primary);
         }
         
         .resources-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
+            gap: 1.5rem;
         }
         
         .resource-card {
             background-color: var(--dark);
             border-radius: 8px;
-            padding: 1rem;
+            padding: 1.5rem;
             transition: var(--transition);
+            border: 1px solid var(--medium-gray);
             cursor: pointer;
         }
         
         .resource-card:hover {
+            border-color: var(--primary);
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+        }
+        
+        .resource-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .resource-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
         }
         
         .resource-title {
@@ -212,43 +317,53 @@
         .resource-description {
             color: var(--light-gray);
             font-size: 0.9rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         
-        /* Modal */
-        .modal {
-            display: none;
+        /* Resource types */
+        .resource-type-pdf .resource-icon {
+            color: #f40f02;
+        }
+        
+        .resource-type-doc .resource-icon {
+            color: #4285f4;
+        }
+        
+        .resource-type-video .resource-icon {
+            color: #ff0000;
+        }
+        
+        /* Active category indicator */
+        .active-category {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            z-index: 2000;
-            padding: 2rem;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            z-index: 100;
+            display: none;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.1;
+            }
         }
         
-        .modal-content {
-            background-color: var(--dark);
-            border-radius: 8px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-            margin: 5vh auto;
-            position: relative;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        /* Responsive */
+        /* Responsive Design */
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: block;
@@ -259,7 +374,15 @@
             }
             
             .docs-hero h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -267,17 +390,22 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <a href="index.html" class="logo">DevHubs</a>
+        <a href="index.html" class="logo">
+            <i class="fas fa-code"></i> DevHubs
+        </a>
         <button class="mobile-menu-btn" id="mobileMenuBtn">
             <i class="fas fa-bars"></i>
         </button>
     </nav>
 
+    <!-- Active category indicator -->
+    <div class="active-category" id="activeCategory"></div>
+
     <!-- Hero Section -->
     <section class="docs-hero">
         <div class="hero-content">
-            <h1>DevHubs Learning Resources</h1>
-            <p>Access all our documentation in one place</p>
+            <h1>DevHubs Documentation Hub</h1>
+            <p>Access all our learning materials, code samples, and documentation in one place</p>
             <div class="search-bar">
                 <i class="fas fa-search"></i>
                 <input type="text" id="searchInput" placeholder="Search documentation...">
@@ -289,7 +417,7 @@
     <section class="docs-categories">
         <h2 class="section-title">Browse by Category</h2>
         <div class="categories-grid" id="categoriesContainer">
-            <!-- Categories will be added by JavaScript -->
+            <!-- Categories will be populated by JavaScript -->
         </div>
     </section>
 
@@ -298,72 +426,136 @@
         <div class="resources-container">
             <h2 class="section-title" id="resourcesTitle">Resources</h2>
             <div class="resource-tabs" id="resourceTabs">
-                <!-- Tabs will be added by JavaScript -->
+                <!-- Tabs will be populated by JavaScript -->
             </div>
             <div class="resources-grid" id="resourcesGrid">
-                <!-- Resources will be added by JavaScript -->
+                <!-- Resources will be populated by JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- Documentation Modal -->
-    <div class="modal" id="docModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <h2 id="modalTitle">Documentation</h2>
-            <div id="modalContent">
-                <!-- Content will be loaded here -->
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Sample data
+        // Your hosted documentation data
         const categories = [
-            { id: 'web', name: 'Web Development', icon: 'laptop-code' },
-            { id: 'mobile', name: 'Mobile Development', icon: 'mobile-alt' },
-            { id: 'dsa', name: 'Data Structures', icon: 'project-diagram' },
-            { id: 'backend', name: 'Backend', icon: 'server' }
+            { 
+                id: 'web-dev', 
+                name: 'Web Development', 
+                icon: 'laptop-code',
+                description: 'HTML, CSS, JavaScript, React, and full-stack development resources',
+                tags: ['all', 'frontend', 'backend', 'frameworks']
+            },
+            { 
+                id: 'mobile-dev', 
+                name: 'Mobile Development', 
+                icon: 'mobile-alt',
+                description: 'Flutter, React Native, and native mobile app development',
+                tags: ['all', 'flutter', 'react-native', 'android', 'ios']
+            },
+            { 
+                id: 'dsa', 
+                name: 'Data Structures', 
+                icon: 'project-diagram',
+                description: 'Data structures, algorithms, and problem solving',
+                tags: ['all', 'arrays', 'trees', 'graphs', 'algorithms']
+            },
+            { 
+                id: 'backend', 
+                name: 'Backend Development', 
+                icon: 'server',
+                description: 'Node.js, Express, databases, and API development',
+                tags: ['all', 'nodejs', 'express', 'mongodb', 'api']
+            }
         ];
 
         const resources = {
-            web: [
+            'web-dev': [
                 { 
-                    id: 'html-guide', 
-                    title: 'HTML5 Guide', 
-                    description: 'Complete guide to modern HTML5', 
-                    content: '<h3>HTML5 Guide</h3><p>This is the complete HTML5 guide content...</p>' 
+                    id: 'html-guide',
+                    title: 'HTML  Fundamentals',
+                    description: 'Complete guide to modern HTML5',
+                    type: 'pdf',
+                    file: 'https://devhubs-in-html-documentaion.vercel.app/',
+                    tags: ['frontend']
                 },
                 { 
-                    id: 'css-guide', 
-                    title: 'CSS3 Guide', 
-                    description: 'Complete guide to modern CSS3', 
-                    content: '<h3>CSS3 Guide</h3><p>This is the complete CSS3 guide content...</p>' 
-                }
+                    id: 'Css-guide',
+                    title: 'CSS  Fundamentals',
+                    description: 'Complete guide to modern CSS',
+                    type: 'pdf',
+                    file: 'https://css-session-taupe.vercel.app/',
+                    tags: ['frontend']
+                },
+
+                // { 
+                //     id: 'js-es6',
+                //     title: 'JavaScript ES6+ Guide',
+                //     description: 'Modern JavaScript features with examples',
+                //     type: 'pdf',
+                //     file: 'https://yourdomain.com/docs/javascript-es6.pdf',
+                //     tags: ['frontend']
+                // },
+                // { 
+                //     id: 'react-guide',
+                //     title: 'React Complete Guide',
+                //     description: 'From basics to advanced React concepts',
+                //     type: 'doc',
+                //     file: 'https://yourdomain.com/docs/react-complete-guide',
+                //     tags: ['frameworks']
+                // }
             ],
-            mobile: [
-                { 
-                    id: 'flutter', 
-                    title: 'Flutter Basics', 
-                    description: 'Introduction to Flutter development', 
-                    content: '<h3>Flutter Basics</h3><p>This is the Flutter guide content...</p>' 
-                }
+            'mobile-dev': [
+                // { 
+                //     id: 'flutter-basics',
+                //     title: 'Flutter Crash Course',
+                //     description: 'Get started with Flutter development',
+                //     type: 'pdf',
+                //     file: 'https://yourdomain.com/docs/flutter-crash-course.pdf',
+                //     tags: ['flutter']
+                // },
+                // { 
+                //     id: 'react-native',
+                //     title: 'React Native Tutorial',
+                //     description: 'Building cross-platform apps with React Native',
+                //     type: 'doc',
+                //     file: 'https://yourdomain.com/docs/react-native-tutorial',
+                //     tags: ['react-native']
+                // }
             ],
-            dsa: [
-                { 
-                    id: 'arrays', 
-                    title: 'Array Problems', 
-                    description: 'Collection of array problems', 
-                    content: '<h3>Array Problems</h3><p>This is the array problems content...</p>' 
-                }
+            'dsa': [
+                // { 
+                //     id: 'arrays-guide',
+                //     title: 'Array Problems Collection',
+                //     description: '100+ array problems with solutions',
+                //     type: 'pdf',
+                //     file: 'https://yourdomain.com/docs/dsa-arrays.pdf',
+                //     tags: ['arrays']
+                // },
+                // { 
+                //     id: 'tree-algos',
+                //     title: 'Tree Algorithms',
+                //     description: 'Complete guide to tree traversal',
+                //     type: 'pdf',
+                //     file: 'https://yourdomain.com/docs/tree-algorithms.pdf',
+                //     tags: ['trees']
+                // }
             ],
-            backend: [
-                { 
-                    id: 'nodejs', 
-                    title: 'Node.js Guide', 
-                    description: 'Complete Node.js documentation', 
-                    content: '<h3>Node.js Guide</h3><p>This is the Node.js guide content...</p>' 
-                }
+            'backend': [
+                // { 
+                //     id: 'nodejs-guide',
+                //     title: 'Node.js Documentation',
+                //     description: 'Complete Node.js reference',
+                //     type: 'doc',
+                //     file: 'https://yourdomain.com/docs/nodejs-documentation',
+                //     tags: ['nodejs']
+                // },
+                // { 
+                //     id: 'express-api',
+                //     title: 'Building APIs with Express',
+                //     description: 'REST API development guide',
+                //     type: 'pdf',
+                //     file: 'https://yourdomain.com/docs/express-api-guide.pdf',
+                //     tags: ['api']
+                // }
             ]
         };
 
@@ -373,14 +565,12 @@
         const resourceTabs = document.getElementById('resourceTabs');
         const resourcesTitle = document.getElementById('resourcesTitle');
         const searchInput = document.getElementById('searchInput');
-        const docModal = document.getElementById('docModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalContent = document.getElementById('modalContent');
-        const closeModal = document.getElementById('closeModal');
+        const activeCategory = document.getElementById('activeCategory');
 
         // Current state
         let currentCategory = null;
-        let currentTab = 'all';
+        let currentTag = 'all';
+        let currentSearch = '';
 
         // Initialize the page
         function init() {
@@ -388,7 +578,7 @@
             setupEventListeners();
         }
 
-        // Render categories
+        // Render category cards
         function renderCategories() {
             categoriesContainer.innerHTML = categories.map(category => `
                 <div class="category-card" data-category="${category.id}">
@@ -396,111 +586,139 @@
                         <i class="fas fa-${category.icon}"></i>
                     </div>
                     <h3>${category.name}</h3>
-                    <p>Explore ${category.name} resources</p>
+                    <p>${category.description}</p>
                     <a href="#${category.id}" class="btn">View Resources</a>
                 </div>
             `).join('');
         }
 
-        // Render resources for a category
-        function renderResources(categoryId) {
-            currentCategory = categoryId;
+        // Render resource tabs for a category
+        function renderTabs(categoryId) {
             const category = categories.find(c => c.id === categoryId);
-            resourcesTitle.textContent = `${category.name} Resources`;
+            if (!category) return;
             
-            // Simple tabs - could be enhanced
-            resourceTabs.innerHTML = `
-                <div class="resource-tab active" data-tab="all">All</div>
-                <div class="resource-tab" data-tab="popular">Popular</div>
-            `;
+            resourceTabs.innerHTML = category.tags.map(tag => {
+                const label = tag.replace('-', ' ');
+                return `<div class="resource-tab ${tag === 'all' ? 'active' : ''}" data-tag="${tag}">${label}</div>`;
+            }).join('');
+        }
+
+        // Render resources based on filters
+        function renderResources() {
+            let filteredResources = [];
             
-            // Filter resources based on search
-            const searchTerm = searchInput.value.toLowerCase();
-            let filteredResources = resources[categoryId] || [];
-            
-            if (searchTerm) {
-                filteredResources = filteredResources.filter(resource => 
-                    resource.title.toLowerCase().includes(searchTerm) || 
-                    resource.description.toLowerCase().includes(searchTerm)
-                );
+            if (currentCategory) {
+                filteredResources = resources[currentCategory] || [];
+                
+                // Filter by tag if not 'all'
+                if (currentTag !== 'all') {
+                    filteredResources = filteredResources.filter(resource => 
+                        resource.tags.includes(currentTag)
+                    );
+                }
+                
+                // Filter by search term
+                if (currentSearch) {
+                    const searchTerm = currentSearch.toLowerCase();
+                    filteredResources = filteredResources.filter(resource => 
+                        resource.title.toLowerCase().includes(searchTerm) || 
+                        resource.description.toLowerCase().includes(searchTerm)
+                    );
+                }
             }
             
             // Render resources
-            resourcesGrid.innerHTML = filteredResources.map(resource => `
-                <div class="resource-card" data-resource="${resource.id}">
-                    <h3 class="resource-title">${resource.title}</h3>
-                    <p class="resource-description">${resource.description}</p>
-                    <button class="btn">View Documentation</button>
-                </div>
-            `).join('');
+            resourcesGrid.innerHTML = filteredResources.map(resource => {
+                let icon = 'file-alt';
+                if (resource.type === 'pdf') icon = 'file-pdf';
+                if (resource.type === 'video') icon = 'video';
+                
+                return `
+                    <div class="resource-card resource-type-${resource.type}" data-resource-id="${resource.id}">
+                        <div class="resource-header">
+                            <div class="resource-icon">
+                                <i class="fas fa-${icon}"></i>
+                            </div>
+                            <div>
+                                <h3 class="resource-title">${resource.title}</h3>
+                                <p class="resource-description">${resource.description}</p>
+                            </div>
+                        </div>
+                        <a href="${resource.file}" class="btn" target="_blank">
+                            View Documentation <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                `;
+            }).join('');
         }
 
-        // Show documentation in modal
-        function showDocumentation(resourceId) {
-            const categoryResources = resources[currentCategory] || [];
-            const resource = categoryResources.find(r => r.id === resourceId);
+        // Show a specific category
+        function showCategory(categoryId) {
+            currentCategory = categoryId;
+            currentTag = 'all';
             
-            if (resource) {
-                modalTitle.textContent = resource.title;
-                modalContent.innerHTML = resource.content;
-                docModal.style.display = 'block';
-            }
+            const category = categories.find(c => c.id === categoryId);
+            if (!category) return;
+            
+            // Update UI
+            resourcesTitle.textContent = `${category.name} Resources`;
+            activeCategory.textContent = category.name;
+            activeCategory.style.display = 'block';
+            
+            // Scroll to resources section
+            document.getElementById('resourcesSection').scrollIntoView({ behavior: 'smooth' });
+            
+            // Render tabs and resources
+            renderTabs(categoryId);
+            renderResources();
         }
 
         // Setup event listeners
         function setupEventListeners() {
-            // Category click
+            // Category card clicks
             categoriesContainer.addEventListener('click', (e) => {
                 const card = e.target.closest('.category-card');
                 if (card) {
                     const categoryId = card.dataset.category;
-                    renderResources(categoryId);
-                    document.getElementById('resourcesSection').scrollIntoView();
+                    showCategory(categoryId);
                 }
             });
             
-            // Resource click
-            resourcesGrid.addEventListener('click', (e) => {
-                const card = e.target.closest('.resource-card');
-                if (card) {
-                    const resourceId = card.dataset.resource;
-                    showDocumentation(resourceId);
-                }
-            });
-            
-            // Tab click
+            // Resource tab clicks
             resourceTabs.addEventListener('click', (e) => {
                 const tab = e.target.closest('.resource-tab');
                 if (tab) {
                     document.querySelectorAll('.resource-tab').forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
-                    currentTab = tab.dataset.tab;
-                    // In a real app, you would filter resources here
+                    currentTag = tab.dataset.tag;
+                    renderResources();
                 }
             });
             
-            // Search input
-            searchInput.addEventListener('input', () => {
-                if (currentCategory) {
-                    renderResources(currentCategory);
-                }
+            // Global search
+            searchInput.addEventListener('input', (e) => {
+                currentSearch = e.target.value;
+                renderResources();
             });
             
-            // Close modal
-            closeModal.addEventListener('click', () => {
-                docModal.style.display = 'none';
-            });
-            
-            // Close modal when clicking outside
-            window.addEventListener('click', (e) => {
-                if (e.target === docModal) {
-                    docModal.style.display = 'none';
-                }
-            });
+            // Handle hash changes for deep linking
+            window.addEventListener('hashchange', handleHashChange);
+            handleHashChange();
         }
 
-        // Initialize the app
+        // Handle URL hash changes
+        function handleHashChange() {
+            const hash = window.location.hash.substring(1);
+            if (!hash) return;
+            
+            const category = categories.find(c => c.id === hash);
+            if (category) {
+                showCategory(category.id);
+            }
+        }
+
+        // Initialize the page
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-</html>updatec
+</html>
